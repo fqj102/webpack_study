@@ -1,5 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 module.exports = {
     // https://webpack.js.org/concepts/mode/
@@ -14,8 +18,83 @@ module.exports = {
             'node_modules'
         ]
     },
+    module: {
+        rules: [
+            { // babel
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-proposal-class-properties'],
+                    }
+                }
+            },
+            { // css, scss
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ]
+            },
+            { // file
+                test: /\.(gif|jpg|png|svg)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: './img/[name].[ext]'
+                        }
+                    }
+                ]
+            },
+            { // url
+                test: /\.(ttf|woff|woff2|eot)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: './img/[name].[ext]'
+                        }
+                    }
+                ]
+            },
+            { // eslint
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+                options: {
+                    // eslint options (if necessary)
+                }
+            },
+        ],
+    },
+
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true // set to true if you want JS source maps
+            }),
+            new OptimizeCSSAssetsPlugin({})
+        ]
+    },
 
     plugins: [
+        //new ExtractTextPlugin('styles.css'),
+
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            // filename: 'css/[name].[hash].css',
+            filename: 'css/[name].css',
+            chunkFilename: 'css/[id].[hash].css',
+        }),
+
         new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(__dirname, 'public/index.html'), // 사용할 html
