@@ -1,6 +1,6 @@
 const path = require('path'); // node.js의 모듈로서 파일 경로를 다룸.
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack = require('webpack');
 module.exports = {
     // https://webpack.js.org/concepts/mode/
     mode: 'development',
@@ -16,7 +16,73 @@ module.exports = {
         ]
     },
 
+    devtool: 'inline-source-map',
+
+    module: {
+        rules: [
+            { // babel
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-proposal-class-properties'],
+                    }
+                }
+            },
+            { // css
+                test: /\.css$/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' }
+                ],
+            },
+            { // scss
+                test: /\.(sass|scss)$/,
+                use: [
+                    'style-loader', // creates style nodes from JS strings
+                    'css-loader', // translates CSS into CommonJS
+                    'sass-loader' // compiles Sass to CSS, using Node Sass by default
+                ],
+            },
+            { // file
+                test: /\.(gif|jpg|png|svg)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {},
+                    },
+                ],
+            },
+            { // url
+                test: /\.(ttf|woff|woff2|eot)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                        }
+                    }
+                ]
+            },
+            { // eslint
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader',
+                options: {
+                    // eslint options (if necessary)
+                }
+            },
+        ],
+    },
+
     plugins: [
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery',
+            $: 'jquery',
+            Mustache: 'mustache',
+        }),
         new HtmlWebpackPlugin({
             title: 'Development', // 아래 template 없을 때 빈 html에 title 제공.
             inject: true,
