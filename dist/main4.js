@@ -81,32 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index03.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/index03.js":
-/*!************************!*\
-  !*** ./src/index03.js ***!
-  \************************/
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _menu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./menu */ \"./src/menu.js\");\n\n\nwindow.onload = function () {\n  Object(_menu__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n};\n\n//# sourceURL=webpack:///./src/index03.js?");
-
-/***/ }),
-
-/***/ "./src/menu.js":
-/*!*********************!*\
-  !*** ./src/menu.js ***!
-  \*********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n//export default \"mike\";\n/* harmony default export */ __webpack_exports__[\"default\"] = (function () {\n  console.log('menu');\n});\n\n//# sourceURL=webpack:///./src/menu.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n!(function webpackMissingModule() { var e = new Error(\"Cannot find module 'view'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\n\n\nnew !(function webpackMissingModule() { var e = new Error(\"Cannot find module 'view'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())();\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
